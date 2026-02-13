@@ -24,6 +24,9 @@ app.use('/users/', authRoutes)
 import userRoutes from './src/routes/user.Routes.js'
 app.use('/api/', userRoutes)
 
+import productRoutes from './src/routes/product.Routes.js'
+app.use('/product/', productRoutes)
+
 
 
 app.listen(PORT, () => {

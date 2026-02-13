@@ -1,0 +1,874 @@
+[
+    {
+        "id": 1,
+        "brand": "bata",
+        "name": "BATA Men’s Fashion Casual Shoes",
+        "price": 2297,
+        "sizes": [
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 3.3,
+        "gender": "male",
+        "category": "Casual Shoes",
+        "description": "BATA Men’s Fashion Casual Shoes, Stylish Lace-Up Flats with Cushioned Insole, Durable Sole & Classic Stitch Detailing, Comfortable Everyday Shoes for Outing Work, Office & Travel.",
+        "isNew": true,
+        "image": [
+            "/product-list/bata_Casual Shoes.jpg",
+            "/product-list/bata_Casual Shoes-2.jpg"
+        ]
+    },
+    {
+        "id": 2,
+        "brand": "bata",
+        "name": "BATA Men's Formal Derby Dress Shoes",
+        "price": 1837,
+        "sizes": [
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 3.9,
+        "gender": "male",
+        "category": "formal",
+        "description": "BATA Men's Formal Derby Dress Shoes, Classic Oxford-Style Lace-Up, Comfortable & Durable Shoes for Office, Church, Business Meetings, Weddings, Daily Wear & Suit Outfits.",
+        "isNew": true,
+        "image": [
+            "/product-list/bata_Formal Derby Dress Shoes (2).jpg",
+            "/product-list/bata_Formal Derby Dress Shoes.jpg"
+        ]
+    },
+    {
+        "id": 3,
+        "brand": "bata",
+        "name": "BATA Men's Oxford Classic Lace-Up Dress Shoes",
+        "price": 1837,
+        "sizes": [
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 3.5,
+        "gender": "male",
+        "category": "formal",
+        "description": "BATA Men's Oxford Classic Lace-Up Dress Shoes, Comfortable Formal Shoes for Men, Cushioned Insole Derby Fit Ideal for Church, Wedding, Office & Daily Wear.",
+        "isNew": true,
+        "image": [
+            "/product-list/oxford_bata 01.jpeg",
+            "/product-list/oxford_bata.jpeg"
+        ]
+    },
+    {
+        "id": 4,
+        "brand": "adidas",
+        "name": "Adidas Avery",
+        "price": 5514,
+        "sizes": [
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "category": "running",
+        "gender": "male",
+        "description": "Ultralight running shoes with a neutral fit.",
+        "isNew": true,
+        "image": [
+            "/product-list/adidas_running 1.jpg",
+            "/product-list/adidas_running 2.jpg"
+        ]
+    },
+    {
+        "id": 5,
+        "brand": "adidas",
+        "name": "Adidas Campus 00 Mens Shoes",
+        "price": 9100,
+        "sizes": [
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "rating": 5,
+        "category": "running",
+        "gender": "male",
+        "description": "High-performance adidas running shoes designed for maximum durability.",
+        "isNew": true,
+        "image": [
+            "/product-list/Adidas_running.jpg",
+            "/product-list/Adidas_running 02.jpg"
+        ]
+    },
+    {
+        "id": 6,
+        "brand": "nike",
+        "name": "Nike Mens V5 Runner",
+        "price": 6250,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "category": [
+            "running",
+            "gym",
+            "training",
+            "sports"
+        ],
+        "gender": "male",
+        "description": "Mesh upper with synthetic leather overlays is breathable and durable.",
+        "isNew": false,
+        "image": [
+            "/product-list/nike_running 02.jpg",
+            "/product-list/nike_running.jpg"
+        ]
+    },
+    {
+        "id": 8,
+        "brand": "nike",
+        "name": "Nike Free 2025",
+        "price": 7650,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "category": "sports",
+        "gender": "male",
+        "description": "Men's Workout Shoes.",
+        "isNew": true,
+        "image": [
+            "/product-list/nike_free 2025 running 01.avif",
+            "/product-list/nike_free 2025 running.avif"
+        ]
+    },
+    {
+        "id": 9,
+        "brand": "nike",
+        "name": "Nike Men's React Infinity Pro Golf Shoes",
+        "price": 5339,
+        "sizes": [
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "category": "sports",
+        "gender": "male",
+        "description": "Built with revolutionary cushioning & innovative traction, the Nike Men's React Infinity Pro Golf Shoes give you the support, comfort and grip you need to play at your best.",
+        "isNew": true,
+        "image": [
+            "/product-list/nike_infinity_sports.webp",
+            "/product-list/nike_infinity_sports 02.webp"
+        ]
+    },
+    {
+        "id": 10,
+        "brand": "nike",
+        "name": "Nike Men's Jordan NU Retro 1 G Golf Shoes",
+        "price": 10235,
+        "sizes": [
+            9,
+            10
+        ],
+        "rating": 5,
+        "gender": "male",
+        "category": "sports",
+        "description": "An instant classic on the course, the Jordan NU Retro 1 G melds iconic Jordan style with our latest golf technology. A rubber heel and durable plastic forefoot plate help give you stability and comfortable cushioning. Seven removable spikes add traction, so you're ready for swift swings and walking the course.",
+        "isNew": true,
+        "image": [
+            "/product-list/nike_jordan 01.webp",
+            "/product-list/nike_jordan 02.webp"
+        ]
+    },
+    {
+        "id": 11,
+        "brand": "adidas",
+        "name": "adidas Mens Campus 00S Sneakers Shoes Casual -Blue - Size 11.5 M",
+        "price": 5648,
+        "sizes": [
+            8,
+            9,
+            10,
+            11
+        ],
+        "gender": "male",
+        "rating": 5,
+        "category": "sneakers",
+        "description": " Campus 00S Shoes For Men, A Nod To The Iconic Primary Colours Of The 2000S. Crafted From Leather And Textile With A Rubber Outsole, These Shoes Are An Update On The Classic Campus 80S Silhouette.",
+        "isNew": true,
+        "image": [
+            "/product-list/campus_00s sneakers 01.jpg",
+            "/product-list/campus_00s sneakers.jpg"
+        ]
+    },
+    {
+        "id": 12,
+        "brand": "campus",
+        "name": "ROCKET PRO Training & Gym Shoes For Men",
+        "price": 808,
+        "sizes": [
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "category": "sports",
+        "gender": "male",
+        "description": "High-performance campus sports shoes designed for maximum durability.",
+        "isNew": false,
+        "image": [
+            "/product-list/campus_sports 01.webp",
+            "/product-list/campus_sport 02.webp"
+        ]
+    },
+    {
+        "id": 7,
+        "brand": "nike",
+        "name": "Nike Free 2025",
+        "price": 7650,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "gender":"male",
+        "category": "running",
+        "description": "Men's Workout Shoes.",
+        "isNew": true,
+        "image": [
+            "/product-list/nike_free 2025 running 01.avif",
+            "/product-list/nike_free 2025 running.avif"
+        ]
+    },
+    {
+        "id": 13,
+        "brand": "campus",
+        "name": "OXYFIT (N) Men's Casual Shoes | Memory Foam",
+        "price": 679,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "category": "sports",
+        "gender": "male",
+        "description": "Memory Foam & PilloFoam Comfort | Slip-On Walking Shoes For Men.",
+        "isNew": true,
+        "image": [
+            "/product-list/campus_OXYFIT 01.webp",
+            "/product-list/campus_OXYFIT 02.webp",
+            "/product-list/campus_OXYFIt 03.webp"
+        ]
+    },
+    {
+        "id": 14,
+        "brand": "campus",
+        "name": "EVARO Running Shoes For Men",
+        "price": 798,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "category": "running",
+        "gender": "male",
+        "description": "High-performance campus running shoes designed for maximum durability.",
+        "isNew": true,
+        "image": [
+            "/product-list/campus_runnng 01.webp",
+            "/product-list/campus_running 02.webp"
+        ]
+    },
+    {
+        "id": 15,
+        "brand": "campus",
+        "name": "RELTO Running Shoes For Men",
+        "price": 1132,
+        "sizes": [
+            6,
+            7
+        ],
+        "rating": 4,
+        "category": "running",
+        "gender": "male",
+        "description": "High-performance campus running shoes designed for maximum durability.",
+        "isNew": false,
+        "image": [
+            "/product-list/campus_RELTO.webp",
+            "/product-list/campus_RELTO 02.webp"
+        ]
+    },
+    {
+        "id": 16,
+        "brand": "mochi",
+        "name": "Slip On Sneakers For Men",
+        "price": 1694,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.5,
+        "gender": "male",
+        "category": "sneakers",
+        "description": "Best Sneakers For Men .",
+        "isNew": true,
+        "image": [
+            "/product-list/mochi_sneaker.webp",
+            "/product-list/mochi_sneaker 02.webp"
+        ]
+    },
+    {
+        "id": 17,
+        "brand": "mochi",
+        "name": "Casual shoe For Men",
+        "price": 2233,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.3,
+        "gender": "male",
+        "category": "Casual Shoes",
+        "description": "Casual shoes For Men.",
+        "isNew": false,
+        "image": [
+            "/product-list/mochi_casuals 02.webp",
+            "/product-list/campus_sports 01.webp"
+        ]
+    },
+    {
+        "id": 18,
+        "brand": "red-tape",
+        "name": "Athleisure Shoes for Men |Cultured Round-Toe Shape & Cushioning Technology Walking Shoes For Men",
+        "price": 1239,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "sports",
+        "description": "Cultured Round-Toe Shape & Cushioning Technology Walking Shoes For Men.",
+        "isNew": true,
+        "image": [
+            "/product-list/red-tape_sports 01.webp",
+            "/product-list/red-tape_sports 02.webp"
+        ]
+    },
+    {
+        "id": 19,
+        "brand": "red-tape",
+        "name": "Lifestyle Sneaker Shoes for Men | Elegantly Rounded Front, Soothing Insole Sneakers For Men",
+        "price": 1219,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "sneakers",
+        "description": "Elegantly Rounded Front, Soothing Insole Sneakers For Men.",
+        "isNew": true,
+        "image": [
+            "/product-list/red-tape_sports 01.webp",
+            "/product-list/red-tape_sports 02.webp"
+        ]
+    },
+    {
+        "id": 20,
+        "brand": "sparx",
+        "name": "SM 4012 Sneakers For Men",
+        "price": 639,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "sneakers",
+        "description": "Sneakers For Men.",
+        "isNew": false,
+        "image": [
+            "/product-list/sparx_sneaker 02.webp",
+            "/product-list/sparx_sneaker 01.webp"
+        ]
+    },
+    {
+        "id": 21,
+        "brand": "sparx",
+        "name": "SM 646 Walking Shoes For Men",
+        "price": 639,
+        "sizes": [
+            8,
+            9,
+            10
+        ],
+        "rating": 4.1,
+        "gender": "male",
+        "category": "walking",
+        "description": "Walking Shoes for Men.",
+        "isNew": true,
+        "image": [
+            "/product-list/sparx_sm646.webp",
+            "/product-list/sparx_sm646 01.webp"
+        ]
+    },
+    {
+        "id": 22,
+        "brand": "sparx",
+        "name": "SM 1031 Slip On Sneakers For Men",
+        "price": 969,
+        "sizes": [
+            6,
+            7,
+            8
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "sneakers",
+        "description": "Sneakers For Men.",
+        "isNew": false,
+        "image": [
+            "/product-list/sparx_sm_1031 01.jpeg",
+            "/product-list/sparx_sm_1031.jpeg"
+        ]
+    },
+    {
+        "id": 23,
+        "brand": "asics",
+        "name": "GEL-VENTURE 10 Running Shoes For Men",
+        "price": 2924,
+        "sizes": [
+            8,
+            9
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "running",
+        "description": "Running Shoes For Men.",
+        "isNew": false,
+        "image": [
+            "/product-list/asic_GEL-VENTURE 01.jpeg",
+            "/product-list/asic_GEL-VENTURE 02.jpeg"
+        ]
+    },
+    {
+        "id": 24,
+        "brand": "asics",
+        "name": "Gel-Courtmov Badminton Shoes For Men",
+        "price": 3464,
+        "sizes": [
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "sports",
+        "description": "Badminton Shoes For Men.",
+        "isNew": true,
+        "image": [
+            "/product-list/asics_gel-courtmov 01.jpeg",
+            "/product-list/asics_gel-courtmov 02.jpeg"
+        ]
+    },
+    {
+        "id": 25,
+        "brand": "Skechers",
+        "name": "TERRENEX Casuals For Men",
+        "price": 2430,
+        "sizes": [
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "Casual Shoes",
+        "description": "Casual shoes For Men.",
+        "isNew": true,
+        "image": [
+            "/product-list/Skechers_TERRENEX.jpeg",
+            "/product-list/Skechers_TERRENEX 02.jpeg"
+        ]
+    },
+    {
+        "id": 26,
+        "brand": "Skechers",
+        "name": "GO RUN ELEVATE Running Shoes For Men",
+        "price": 2651,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "running",
+        "description": "Running Shoes For Men.",
+        "isNew": false,
+        "image": [
+            "/product-list/skechers_GO RUN ELEVATE.jpeg",
+            "/product-list/skechers_GO RUN ELEVATE 02.jpeg"
+        ]
+    },
+    {
+        "id": 27,
+        "brand": "asics",
+        "name": "GEL-NIMBUS 27 Running Shoes For Men",
+        "price": 11899,
+        "sizes": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "running",
+        "description": "Running Shoes For Men.",
+        "isNew": true,
+        "image": [
+            "/product-list/asics_GEL-NIMBUS 01.jpeg",
+            "/product-list/asics_GEL-NIMBUS 02.jpeg"
+        ]
+    },
+    {
+        "id": 28,
+        "brand": "asics",
+        "name": "GEL-VENTURE 9 Running Shoes For Men",
+        "price": 2429,
+        "sizes": [
+            8,
+            9,
+            10
+        ],
+        "rating": 4.2,
+        "gender": "male",
+        "category": "running",
+        "description": "Running Shoes For Men.",
+        "isNew": false,
+        "image": [
+            "/product-list/GEL-VENTURE_asics 02.jpeg",
+            "/product-list/asic_GEL-VENTURE 01.jpeg"
+        ]
+    },
+    {
+        "id": 29,
+        "brand": "puma",
+        "name": "Puma Evoflex PowerTread Wns Running Shoes For Women",
+        "price": 1913,
+        "sizes": [
+            3,
+            4,
+            5
+        ],
+        "rating": 4.4,
+        "gender": "female",
+        "category": "running",
+        "description": "Running Shoes For Women.",
+        "isNew": true,
+        "image": [
+            "/product-list/Puma Evoflex 01.jpeg",
+            "/product-list/Puma Evoflex 02.jpeg"
+        ]
+    },
+    {
+        "id": 30,
+        "brand": "hrx",
+        "name": "HRXECSP672WBL Jogging Shoes For Women",
+        "price": 1259,
+        "sizes": [
+            4,
+            5,
+            6,
+            7
+        ],
+        "rating": 3.8,
+        "gender": "female",
+        "category": "walking",
+        "description": "Walking Shoes for Women.",
+        "isNew": true,
+        "image": [
+            "/product-list/HRXECSP672WBL 01.jpeg",
+            "/product-list/HRXECSP672WBL 02.jpeg"
+        ]
+    },
+    {
+        "id": 31,
+        "brand": "puma",
+        "name": "Amplifier Wns Running Shoes For Women",
+        "price": 2790,
+        "sizes": [
+            3,
+            4,
+            5,
+            6
+        ],
+        "rating": 4.2,
+        "gender": "female",
+        "category": "running",
+        "description": "Running Shoes For Women.",
+        "isNew": true,
+        "image": [
+            "/product-list/Amplifier Wns 01.jpeg",
+            "/product-list/Amplifier Wns 02.jpeg"
+        ]
+    },
+    {
+        "id": 32,
+        "brand": "campus",
+        "name": "CAMP CLINT Sneakers For Women",
+        "price": 1065,
+        "sizes": [
+            4,
+            5,
+            6,
+            7,
+            8
+        ],
+        "rating": 4.2,
+        "gender": "female",
+        "category": "sneakers",
+        "description": "Sneakers For Women.",
+        "isNew": false,
+        "image": [
+            "/product-list/CAMP CLINT 01.jpeg",
+            "/product-list/CAMP CLINT 02.jpeg"
+        ]
+    },
+    {
+        "id": 33,
+        "brand": "campus",
+        "name": "CAMMY I Running, Training/Gym Shoes for Women",
+        "price": 1062,
+        "sizes": [
+            4,
+            5,
+            6
+        ],
+        "rating": 4.2,
+        "gender": "female",
+        "category": "sports",
+        "description": "Lightweight Comfortable Footwear Running Shoes For Women.",
+        "isNew": true,
+        "image": [
+            "/product-list/campus_CAMMY.jpeg",
+            "/product-list/campus_CAMMY 02.jpeg"
+        ]
+    },
+    {
+        "id": 34,
+        "brand": "nautica",
+        "name": "Boots For Women",
+        "price": 1999,
+        "sizes": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+        ],
+        "rating": 4.2,
+        "gender": "female",
+        "category": "boots",
+        "description": "Boots For Women.",
+        "isNew": true,
+        "image": [
+            "/product-list/boots_women.jpeg",
+            "/product-list/boots_women 02.jpeg"
+        ]
+    },
+    {
+        "id": 35,
+        "brand": "asian",
+        "name": "Mercury-11 Mint Sports,Gym,Walking,Training,Stylish Running Shoes For Women ",
+        "price": 665,
+        "sizes": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+        ],
+        "rating": 4.1,
+        "gender": "female",
+        "category": [
+            "sports",
+            "gym",
+            "walking"
+        ],
+        "description": "Casual shoes For Men.",
+        "isNew": true,
+        "image": [
+            "/product-list/Mercury-11 01.jpeg",
+            "/product-list/Mercury-11 02.jpeg"
+        ]
+    },
+    {
+        "id": 36,
+        "brand": "campus",
+        "name": "GRIT | Casual, Walking, Daily Wear Sneakers for Women",
+        "price": 1208,
+        "sizes": [
+            5,
+            6,
+            7
+        ],
+        "rating": 4.5,
+        "gender": "female",
+        "category": "walking",
+        "description": "Walking Shoes for Women.",
+        "isNew": false,
+        "image": [
+            "/product-list/GRIT_women.jpeg",
+            "/product-list/GRIT_women 02.jpeg"
+        ]
+    },
+    {
+        "id": 37,
+        "brand": "asian",
+        "name": "Lace Sneakers For Boys",
+        "price": 545,
+        "sizes": [
+            4,
+            5,
+            6
+        ],
+        "rating": 4.1,
+        "gender": "kids",
+        "category": "sneakers",
+        "description": "Sneakers For kid.",
+        "isNew": true,
+        "image": [
+            "/product-list/Lace Sneakers_kid.jpeg",
+            "/product-list/Lace Sneakers_kid 02.jpeg"
+        ]
+    },
+    {
+        "id": 38,
+        "brand": "asian",
+        "name": "Lace Sneakers For Boys",
+        "price": 545,
+        "sizes": [
+            4,
+            5,
+            6
+        ],
+        "rating": 4.1,
+        "gender": "kids",
+        "category": "sneakers",
+        "description": "Sneakers For kid.",
+        "isNew": false,
+        "image": [
+            "/product-list/Lace Sneakers_kid 01.jpeg",
+            "/product-list/Lace Sneakers_kid 03.jpeg"
+        ]
+    },
+    {
+        "id": 39,
+        "brand": "asian",
+        "name": "Lace Sneakers For Boys",
+        "price": 542,
+        "sizes": [
+            4,
+            5,
+            6
+        ],
+        "rating": 4.2,
+        "gender": "kids",
+        "category": "sneakers",
+        "description": "Sneakers For kid.",
+        "isNew": true,
+        "image": [
+            "/product-list/Lace Sneakers_kid 04.jpeg",
+            "/product-list/Lace Sneakers_05.jpeg"
+        ]
+    },
+    {
+        "id": 40,
+        "brand": "asian",
+        "name": "Lace Running Shoes For Boys",
+        "price": 652,
+        "sizes": [
+            4,
+            5,
+            6
+        ],
+        "rating": 4.1,
+        "gender": "kids",
+        "category": "running",
+        "description": "Running Shoes For Kid.",
+        "isNew": true,
+        "image": [
+            "/product-list/running shoe_kid.jpeg",
+            "/product-list/running shoe_kid 02.jpeg"
+        ]
+    },
+    {
+        "id": 41,
+        "brand": "asian",
+        "name": "Lace Running Shoes For Boys",
+        "price": 577,
+        "sizes": [
+            4,
+            5,
+            6
+        ],
+        "rating": 4.1,
+        "gender": "kids",
+        "category": "running",
+        "description": "Running Shoes For Kid.",
+        "isNew": true,
+        "image": [
+            "/product-list/running_kid01.webp",
+            ""
+        ]
+    }
+]
