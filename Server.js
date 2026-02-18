@@ -27,7 +27,8 @@ app.use('/api/', userRoutes)
 import productRoutes from './src/routes/product.Routes.js'
 app.use('/product/', productRoutes)
 
-
+import cartRoutes from './src/routes/cart.Routes.js';
+app.use('/cart/', cartRoutes);
 
 app.listen(PORT, () => {
     console.log(`App is running at ${PORT}`)
