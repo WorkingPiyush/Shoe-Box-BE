@@ -14,6 +14,10 @@ const cartSchema = mongoose.Schema({
             quantity: {
                 type: Number,
                 default: 1
+            },
+            shoeSize: {
+                type: Number,
+                required:true,
             }
         }
     ]

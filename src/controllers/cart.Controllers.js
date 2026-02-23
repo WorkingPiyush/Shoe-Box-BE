@@ -1,37 +1,53 @@
 import express from "express";
 import ProductList from "../data/ProductList2.json" with {type: "json"};
 import Cart from "../models/Cart.js";
+let products = ProductList;
 
 export const updateCart = async (req, res) => {
-    let products = ProductList;
     try {
-        const { prodId, quantity } = req.body;
+        const { productId, quantity, shoeSize } = req.body;
         const userId = req.user.id;
-
         if (quantity < 0) return res.status(400).json({ message: "Invalid Quantity" });
-        const product = products.find(item => item.id === prodId);
+        const product = products.find(item => item.id === productId);
         if (!product) return res.status(400).json({ message: "Product Not Found !!" });
-
         let cart = await Cart.findOne({ userId });
         if (!cart) {
             cart = await Cart.create({ userId, items: [] });
         }
-        const itemIndx = cart.items.findIndex(item => item.id === prodId);
-
-        let productId = prodId;
+        const productCheck = cart.items.find(i => i.productId === productId && i.shoeSize === shoeSize)
         if (quantity == 0) {
-            cart.items = cart.items.filter(item => item.id === productId);
+            cart.items = cart.items.filter(i => i.productId !== productId);
         }
-        if (itemIndx > -1) {
-            cart.items[itemIndx].quantity = quantity;
-            return
-
+        if (productCheck) {
+            productCheck.quantity = productCheck.quantity + 1;
         }
         else {
-            cart.items.push({ productId, quantity });
+            cart.items.push({ productId, quantity, shoeSize });
         }
         await cart.save();
         res.status(200).json(cart);
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+        console.log(error)
+    }
+}
+
+export const getCart = async (req, res) => {
+    const userId = req.user.id;
+    try {
+        let cart = await Cart.findOne({ userId });
+        const ProductDetails = cart.items.map(item => {
+            const productDetails = products.find(p => p.id === item.productId)
+            return {
+                image: productDetails.image,
+                details: productDetails.name,
+                quantity: item.quantity,
+                size: item.shoeSize,
+                price: productDetails.price,
+                total: item.quantity * productDetails.price
+            }
+        });
+        return res.status(200).json(ProductDetails)
     } catch (error) {
         res.status(500).json({ message: "Server error" });
         console.log(error)
