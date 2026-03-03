@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 export const authenticate = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies.token || req.cookies.cookieToken;
     if (!token) {
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }

@@ -1,38 +1,60 @@
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-    name: {
+    fullName: {
         type: String,
         required: true,
-        minlength: 3,
-        maxlength: 100,
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        minlength: 5,
-        maxlength: 255,
     },
-    gender: {
+    password: {
         type: String,
-        required: true
+    },
+
+    authProvider: {
+        type: String,
+        enum: ["local", "google.com", "github.com"],
+    },
+    uid: {
+        type: String,
     },
     role: {
         type: String,
         enum: ["user" || "admin"],
         default: "user"
     },
-    isActive: {
+
+    addresses: [
+        {
+            type: {
+                type: String,
+                enum: ["Home", "Work", "Other"],
+                default: "Home"
+            },
+            street: String,
+            city: String,
+            state: String,
+            pincode: String,
+            country: String,
+            isDefault: { type: Boolean, default: false }
+        }
+    ],
+    isEmailVerified: {
         type: Boolean,
-        default: true
+        default: false
     },
-    password: {
-        type: String,
-        required: true,
-        minlength: 8,
-        maxlength: 100
+    emailVerifiedAt: Date,
+    isPhoneVerified: {
+        type: Boolean,
+        default: false
     },
+    phoneVerifiedAt: Date,
+    wishlist: [
+        { type: Object }
+    ],
 },
     { timestamps: true }
 )

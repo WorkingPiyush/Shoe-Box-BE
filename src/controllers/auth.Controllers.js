@@ -6,9 +6,9 @@ dotenv.config()
 
 export const signup = async (req, res) => {
     try {
-        const { email, gender, name, password } = req.body;
-        if (!name.trim() || !email.trim() || !gender.trim() || !password.trim()) {
-            res.status(500).json({ status: false, message: "Please enter all details" });
+        const { fullName,email, password } = req.body;
+        if (!fullName.trim() || !email.trim() || !password.trim()) {
+           return res.status(500).json({ status: false, message: "Please enter all details" });
         }
         const emailCheck = await user.findOne({ email });
         if (emailCheck) {
@@ -16,12 +16,21 @@ export const signup = async (req, res) => {
         }
         const hashedPass = await bcrypt.hash(password, 10)
         const Newuser = await user.create({
-            name,
+            fullName,
             email,
-            gender,
             password: hashedPass
         })
-        res.status(200).json({ success: true, message: "User Created Successfully", UserId: Newuser._id });
+        const payload = { id: Newuser._id, name: Newuser.name, role: Newuser.role };
+
+        const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "2h" });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "Lax",
+            maxAge: 2 * 60 * 60 * 1000
+        })
+
+        res.status(201).json({ success: true, message: "User Created Successfully", token });
     } catch (error) {
         console.error("Error in signup route", error.message);
         res.status(500).json({ success: false, message: "Internal Server Error," })

@@ -34,31 +34,36 @@ export const updateCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
     const { Usercart } = req.body;
-    try {
-        const Product = Usercart.map(item => {
-            const productDetails = products.find(p => p.id === item.productId)
-            return {
-                productId: item.productId,
-                image: productDetails.image,
-                details: productDetails.name,
-                quantity: item.quantity,
-                size: item.shoeSize,
-                price: productDetails.price,
-                total: item.quantity * productDetails.price
-            }
-        });
-        return res.status(200).json(Product)
-    } catch (error) {
-        res.status(500).json({ message: "Server error" });
-        console.log(error)
-    }
+        try {
+            const Product = Usercart.map(item => {
+                const productDetails = products.find(p => p.id === item.productId)
+                return {
+                    productId: item.productId,
+                    image: productDetails.image,
+                    details: productDetails.name,
+                    quantity: item.quantity,
+                    size: item.shoeSize,
+                    price: productDetails.price,
+                    total: item.quantity * productDetails.price
+                }
+            });
+            return res.status(200).json(Product)
+        } catch (error) {
+            res.status(500).json({ message: "Server error" });
+            console.log(error)
+        }
 }
 
 export const cartInfo = async (req, res) => {
     const userId = req.user.id;
     try {
         let cart = await Cart.findOne({ userId });
-        return res.status(200).json(cart.items)
+        if (!cart) {
+            return res.status(200).json([])
+        } else {
+            return res.status(200).json(cart.items)
+        }
+
     } catch (error) {
         res.status(500).json({ message: "Server error" });
         console.log(error)
