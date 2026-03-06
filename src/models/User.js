@@ -10,20 +10,23 @@ const userSchema = mongoose.Schema({
         required: true,
         unique: true,
     },
+    phone: {
+        type: String,
+        unique: true,
+    },
     password: {
         type: String,
     },
-
-    authProvider: {
+    oauthProvider: {
         type: String,
-        enum: ["local", "google.com", "github.com"],
+        enum: ["local", "google", "github"],
     },
-    uid: {
+    oauthId: {
         type: String,
     },
     role: {
         type: String,
-        enum: ["user" || "admin"],
+        enum: ["user", "admin"],
         default: "user"
     },
 
@@ -47,6 +50,9 @@ const userSchema = mongoose.Schema({
         default: false
     },
     emailVerifiedAt: Date,
+    phone: {
+        type: String,
+    },
     isPhoneVerified: {
         type: Boolean,
         default: false
@@ -55,6 +61,10 @@ const userSchema = mongoose.Schema({
     wishlist: [
         { type: Object }
     ],
+    cart: [
+        { type: Object }
+    ],
+    totalOrders: { type: Number }
 },
     { timestamps: true }
 )
