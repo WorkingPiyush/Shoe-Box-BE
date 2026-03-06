@@ -16,16 +16,16 @@ export const updateCart = async (req, res) => {
         }
         const productCheck = cart.items.find(i => i.productId === productId && i.shoeSize === shoeSize)
         if (quantity == 0) {
-            cart.items = cart.items.filter(i => i.productId !== productId);
+            cart.items = cart.items.filter(i => i.productId !== productId && i.shoeSize === shoeSize);
         }
         if (productCheck) {
-            productCheck.quantity = productCheck.quantity + 1;
+            productCheck.quantity += productCheck.quantity;
         }
         else {
             cart.items.push({ productId, quantity, shoeSize });
         }
         await cart.save();
-        res.status(200).json(cart);
+        res.status(200).json({ success: true, cart });
     } catch (error) {
         res.status(500).json({ message: "Server error" });
         console.log(error)
@@ -34,24 +34,24 @@ export const updateCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
     const { Usercart } = req.body;
-        try {
-            const Product = Usercart.map(item => {
-                const productDetails = products.find(p => p.id === item.productId)
-                return {
-                    productId: item.productId,
-                    image: productDetails.image,
-                    details: productDetails.name,
-                    quantity: item.quantity,
-                    size: item.shoeSize,
-                    price: productDetails.price,
-                    total: item.quantity * productDetails.price
-                }
-            });
-            return res.status(200).json(Product)
-        } catch (error) {
-            res.status(500).json({ message: "Server error" });
-            console.log(error)
-        }
+    try {
+        const Product = Usercart.map(item => {
+            const productDetails = products.find(p => p.id === item.productId)
+            return {
+                productId: item.productId,
+                image: productDetails.image,
+                details: productDetails.name,
+                quantity: item.quantity,
+                size: item.shoeSize,
+                price: productDetails.price,
+                total: item.quantity * productDetails.price
+            }
+        });
+        return res.status(200).json(Product)
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+        console.log(error)
+    }
 }
 
 export const cartInfo = async (req, res) => {
