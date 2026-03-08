@@ -43,6 +43,9 @@ app.use('/cart/', cartRoutes);
 // OAuth Routes
 import oAuthRoutes from './src/routes/OAuth.Routes.js';
 app.use('/auth/', oAuthRoutes)
+// WishList Routes
+import wishListToggle from './src/routes/WishList.Routes.js'
+app.use('/wishlist/', wishListToggle)
 
 app.listen(PORT, () => {
     console.log(`App is running at ${PORT}`)

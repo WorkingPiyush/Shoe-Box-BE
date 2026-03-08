@@ -1,9 +1,8 @@
-import express from "express";
 import ProductList from "../data/ProductList2.json" with {type: "json"};
 import Cart from "../models/Cart.js";
 let products = ProductList;
 
-export const updateCart = async (req, res) => {
+export const Update = async (req, res) => {
     try {
         const { productId, quantity, shoeSize } = req.body;
         const userId = req.user.id;
@@ -14,12 +13,12 @@ export const updateCart = async (req, res) => {
         if (!cart) {
             cart = await Cart.create({ userId, items: [] });
         }
-        const productCheck = cart.items.find(i => i.productId === productId && i.shoeSize === shoeSize)
+        const existence = cart.items.find(i => i.productId === productId && i.shoeSize === shoeSize)
         if (quantity == 0) {
             cart.items = cart.items.filter(i => i.productId !== productId && i.shoeSize === shoeSize);
         }
-        if (productCheck) {
-            productCheck.quantity += productCheck.quantity;
+        if (existence) {
+            existence.quantity = quantity;
         }
         else {
             cart.items.push({ productId, quantity, shoeSize });
@@ -32,7 +31,7 @@ export const updateCart = async (req, res) => {
     }
 }
 
-export const getCart = async (req, res) => {
+export const CartInfo = async (req, res) => {
     const { Usercart } = req.body;
     try {
         const Product = Usercart.map(item => {
@@ -54,7 +53,7 @@ export const getCart = async (req, res) => {
     }
 }
 
-export const cartInfo = async (req, res) => {
+export const CartDetails = async (req, res) => {
     const userId = req.user.id;
     try {
         let cart = await Cart.findOne({ userId });

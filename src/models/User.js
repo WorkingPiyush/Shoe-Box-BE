@@ -58,13 +58,6 @@ const userSchema = mongoose.Schema({
         default: false
     },
     phoneVerifiedAt: Date,
-    wishlist: [
-        { type: Object }
-    ],
-    cart: [
-        { type: Object }
-    ],
-    totalOrders: { type: Number }
 },
     { timestamps: true }
 )
