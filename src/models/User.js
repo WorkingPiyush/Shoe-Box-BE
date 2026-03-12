@@ -29,22 +29,6 @@ const userSchema = mongoose.Schema({
         enum: ["user", "admin"],
         default: "user"
     },
-
-    addresses: [
-        {
-            type: {
-                type: String,
-                enum: ["Home", "Work", "Other"],
-                default: "Home"
-            },
-            street: String,
-            city: String,
-            state: String,
-            pincode: String,
-            country: String,
-            isDefault: { type: Boolean, default: false }
-        }
-    ],
     isEmailVerified: {
         type: Boolean,
         default: false

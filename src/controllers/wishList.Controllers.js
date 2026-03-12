@@ -51,7 +51,8 @@ export const wishlistInfo = async (req, res) => {
                 image: productDetails.image,
                 name: productDetails.name,
                 price: productDetails.price,
-                availablity: "Available"
+                availablity: "Available",
+                gender: productDetails.gender
             }
         });
         return res.status(200).json(product)
