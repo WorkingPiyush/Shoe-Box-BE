@@ -51,6 +51,10 @@ const Address = mongoose.Schema({
         type: String,
         default: "India"
     },
+    location: {
+        lat: Number,
+        lng: Number
+    },
 
     isDefault: {
         type: Boolean,

@@ -34,9 +34,6 @@ const userSchema = mongoose.Schema({
         default: false
     },
     emailVerifiedAt: Date,
-    phone: {
-        type: String,
-    },
     isPhoneVerified: {
         type: Boolean,
         default: false

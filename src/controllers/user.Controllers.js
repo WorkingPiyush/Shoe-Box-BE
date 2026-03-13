@@ -1,5 +1,9 @@
 import User from "../models/User.js";
 import Address from "../models/Address.js";
+import dotenv from 'dotenv';
+import axios from "axios";
+dotenv.config()
+
 
 export const UserInfo = async (req, res) => {
     try {
@@ -82,5 +86,34 @@ export const deleteAddress = async (req, res) => {
         return res.status(200).json({ message: "Address Deleted" });
     } catch (error) {
         return res.status(500).json({ message: "Backend Error", err: error.message });
+    }
+}
+export const fetchAddress = async (req, res) => {
+    const userId = req.user.id;
+    const { lat, lng } = req.query;
+    try {
+        const response = await axios.get(
+            "https://api.geoapify.com/v1/geocode/reverse", {
+            params: {
+                lat: lat,
+                lon: lng,
+                apiKey: process.env.GEOAPIFY_API_KEY,
+            }
+        }
+        );
+        const address = response.data.features[0].properties;
+        const addressDoc = await Address.find({ userId })
+        console.log(addressDoc)
+        return res.status(200).json({
+            locality: address.suburb,
+            state: address.state,
+            pincode: address.postcode,
+            country: address.country,
+            road: address.street
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch location"
+        });
     }
 }
