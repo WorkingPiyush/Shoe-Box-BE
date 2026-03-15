@@ -17,6 +17,9 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
     },
+    lastProfileUpdate: {
+        type: Date
+    },
     oauthProvider: {
         type: String,
         enum: ["local", "google", "github"],
