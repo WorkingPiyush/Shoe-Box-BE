@@ -22,6 +22,7 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 // Home Route
 connectDB(process.env.MONGODB_URI)
+
 app.get('/', (req, res) => {
     res.send("Hello from backend !!")
 })

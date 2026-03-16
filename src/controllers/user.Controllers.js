@@ -94,8 +94,22 @@ export const deleteAddress = async (req, res) => {
         return res.status(500).json({ message: "Backend Error", err: error.message });
     }
 }
+const geoCache = new Map();
+const geoCache_TTL = 24 * 60 * 60 * 1000; // 24 hours
+
 export const fetchAddress = async (req, res) => {
     const { lat, lng } = req.query;
+    if (!lat || !lng) {
+        return res.status(400).json({ message: "Missing coordinates" });
+    }
+    const key = `${Number(lat).toFixed(3)}-${Number(lng).toFixed(3)}`;
+    const cached = geoCache.get(key);
+    if (cached) {
+        if (cached && Date.now() - cached.timestamp < geoCache_TTL) {
+            return res.json(cached.data);
+        }
+        geoCache.delete(key);
+    }
     try {
         const response = await axios.get(
             "https://geocode.maps.co/reverse", {
@@ -103,20 +117,35 @@ export const fetchAddress = async (req, res) => {
                 lat: lat,
                 lon: lng,
                 api_key: process.env.GEOCODING_API_KEY,
-            }
+            },
+            timeout: 5000
         }
         );
         const address = response.data.address;
-        return res.status(200).json({
-            locality: address.suburb + " " + address.city_block,
-            state: address.city,
-            pincode: address.postcode,
-            country: address.country,
-            road: address.street
-        });
+        const result = {
+            locality: address.suburb || "",
+            sector: address.city_block || "",
+            city: address.city || "",
+            pincode: address.postcode || "",
+            country: address.country || "",
+            road: address.street || "",
+        }
+
+        geoCache.set(key, {
+            data: result,
+            timestamp: Date.now()
+        })
+
+        return res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({
-            message: "Failed to fetch location"
+        console.log(error)
+        return res.status(200).json({
+            locality: "",
+            city: "",
+            pincode: "",
+            country: "",
+            road: "",
+            coordinates: { lat, lng }
         });
     }
 }

@@ -6,15 +6,23 @@ export const Update = async (req, res) => {
     try {
         const { productId, quantity, shoeSize } = req.body;
         const userId = req.user.id;
-        if (quantity < 0) return res.status(400).json({ message: "Invalid Quantity" });
+
+        if (productId || quantity || shoeSize) {
+            res.status(400).json({ success: false, message: "Provide necessary details" });
+        }
+        if (quantity < 0) {
+            return res.status(400).json({ message: "Invalid Quantity" });
+        }
         const product = products.find(item => item.id === productId);
-        if (!product) return res.status(400).json({ message: "Product Not Found !!" });
+        if (!product) {
+            return res.status(400).json({ message: "Product Not Found !!" });
+        }
         let cart = await Cart.findOne({ userId });
         if (!cart) {
             cart = await Cart.create({ userId, items: [] });
         }
         const existence = cart.items.find(i => i.productId === productId && i.shoeSize === shoeSize)
-        if (quantity == 0) {
+        if (quantity === 0) {
             cart.items = cart.items.filter(i => i.productId !== productId && i.shoeSize === shoeSize);
         }
         if (existence) {
