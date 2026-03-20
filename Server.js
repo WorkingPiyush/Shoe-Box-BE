@@ -49,7 +49,7 @@ import wishListToggle from './src/routes/WishList.Routes.js'
 app.use('/wishlist/', wishListToggle)
 
 import otpRoutes from './src/routes/otp.Routes.js'
-app.use('/service/', otpRoutes)
+app.use('/auth/otp/', otpRoutes)
 
 app.listen(PORT, () => {
     console.log(`App is running at ${PORT}`)

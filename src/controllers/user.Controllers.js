@@ -156,7 +156,7 @@ export const profileUpdate = async (req, res) => {
 
         let user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ success: false, message: "User not found" });
         }
         const now = Date.now();
         const lastUpdate = user.lastProfileUpdate;
@@ -165,11 +165,22 @@ export const profileUpdate = async (req, res) => {
                 message: "Profile can only be updated once every 24 hours"
             });
         }
-        if (email) user.email = email;
-        if (phone) user.phone = phone;
+        if (email) {
+            if (await User.findOne({ email })) {
+                return res.status(400).json({ success: false, message: "Invalid Email" });
+            }
+            user.email = email
+            user.isEmailVerified = false;
+        };
+        if (phone) {
+            if (await User.findOne({ phone })) {
+                return res.status(400).json({ success: false, message: "Invalid Phone" });
+            }
+            user.phone = phone;
+        }
         user.lastProfileUpdate = now;
         await user.save();
-        res.status(200).json({ message: "User Updated Successfully" });
+        return res.status(200).json({ success: true, message: "User Updated Successfully" });
     } catch (error) {
         console.error(error.message);
         res.status(500).json({
