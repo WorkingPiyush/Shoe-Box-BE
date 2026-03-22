@@ -61,7 +61,7 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
     const email = req.body.email?.trim().toLowerCase();
     const password = req.body.password?.trim();
-    console.log(email, password)
+    // console.log(email, password)
 
     if (!email || !password) {
         return res.status(400).json({ success: false, message: "Please enter Email and Password for login !" })
@@ -71,7 +71,7 @@ export const login = async (req, res) => {
         return res.status(400).json({ status: false, message: "Invalid email" });
     }
     const findUser = await user.findOne({ email });
-    console.log(findUser)
+    // console.log(findUser)
     if (!findUser) {
         return res.status(404).json({ success: false, message: "Invalid email or password" });
     }

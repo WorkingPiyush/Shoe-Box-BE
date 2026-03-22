@@ -29,6 +29,7 @@ export const updateAddress = async (req, res) => {
         address.phone = data.phone;
         address.house = data.house;
         address.locality = data.locality;
+        address.city = data.city;
         address.state = data.state;
         address.pincode = data.pincode;
         address.country = data.country;
@@ -67,6 +68,7 @@ export const addAddress = async (req, res) => {
             phone: data.phone,
             house: data.house,
             locality: data.locality,
+            city: data.city,
             state: data.state,
             pincode: data.pincode,
             country: data.country,
@@ -154,6 +156,9 @@ export const profileUpdate = async (req, res) => {
         const userId = req.user.id;
         const { email, phone } = req.body;
 
+        if (!email.includes('@')) {
+            return res.status(400).json({ success: false, message: "Invalid Email" });
+        }
         let user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ success: false, message: "User not found" });
@@ -176,7 +181,7 @@ export const profileUpdate = async (req, res) => {
             if (await User.findOne({ phone })) {
                 return res.status(400).json({ success: false, message: "Invalid Phone" });
             }
-            user.phone = phone;
+            user.phone = `+91${phone}`;
         }
         user.lastProfileUpdate = now;
         await user.save();

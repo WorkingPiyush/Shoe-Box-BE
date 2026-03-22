@@ -6,9 +6,8 @@ export const Update = async (req, res) => {
     try {
         const { productId, quantity, shoeSize } = req.body;
         const userId = req.user.id;
-
-        if (productId || quantity || shoeSize) {
-            res.status(400).json({ success: false, message: "Provide necessary details" });
+        if (!productId || !shoeSize) {
+            return res.status(400).json({ success: false, message: "Provide necessary details" });
         }
         if (quantity < 0) {
             return res.status(400).json({ message: "Invalid Quantity" });
@@ -22,8 +21,10 @@ export const Update = async (req, res) => {
             cart = await Cart.create({ userId, items: [] });
         }
         const existence = cart.items.find(i => i.productId === productId && i.shoeSize === shoeSize)
-        if (quantity === 0) {
-            cart.items = cart.items.filter(i => i.productId !== productId && i.shoeSize === shoeSize);
+        if (quantity <= 0) {
+            cart.items = cart.items.filter((i) => !(i.productId === productId && i.shoeSize === shoeSize));
+            await cart.save();
+            return res.status(200).json({ success: true, cart });
         }
         if (existence) {
             existence.quantity = quantity;
@@ -32,10 +33,10 @@ export const Update = async (req, res) => {
             cart.items.push({ productId, quantity, shoeSize });
         }
         await cart.save();
-        res.status(200).json({ success: true, cart });
+        return res.status(200).json({ success: true, cart });
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
         console.log(error)
+        return res.status(500).json({ message: "Server error" });
     }
 }
 

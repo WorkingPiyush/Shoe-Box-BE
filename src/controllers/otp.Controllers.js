@@ -1,7 +1,8 @@
 import crypto from 'crypto';
 import OTP from '../models/Otp.js';
 import User from "../models/User.js";
-import { SendEmail } from '../service/OtpService.js';
+import { SendEmail } from '../service/MailOtpService.js';
+import { sendPhoneOtp } from '../service/PhoneOtpService.js';
 const OTP_EXPIRY_MINUTES = 5;
 const OTP_EXPIRY_MS = 5 * 60 * 1000;
 const MAX_ATTEMPTS = 5;
@@ -35,8 +36,8 @@ export const generateOtp = async (req, res) => {
         const otpHash = crypto.createHash('sha256').update(otp).digest('hex');
         const existingOtp = await OTP.findOne({ userId, type });
 
-        if (existingOtp && Date.now() - existingOtp.createdAt < 120000) {
-            return res.status(429).json({ message: "Try again later" });
+        if (existingOtp && Date.now() - existingOtp.createdAt < 30000) {
+            return res.status(429).json({ message: "Try again later in some time" });
         }
 
         if (!existingOtp) {
@@ -50,7 +51,7 @@ export const generateOtp = async (req, res) => {
             await SendEmail(contact, "Your OTP for Email Verification", `<p>Your One-Time Password (OTP) for Email Verification is: <strong>${otp}</strong>.</p><p>It is valid for ${OTP_EXPIRY_MINUTES} minutes.</p>`);
         }
         if (type === "phone") {
-            // await otpSend(contact, otp);
+            await sendPhoneOtp(`Your One-Time Password (OTP) for Email Verification is: ${otp} .It is valid for ${OTP_EXPIRY_MINUTES} minutes.`, contact)
             console.log("Otp Sent to your phone")
         }
         return res.status(200).json({ success: true, message: `OTP sent via ${type}` });
@@ -83,13 +84,13 @@ export const verifyOtp = async (req, res) => {
         }
         if (genratedOtp.attempts > MAX_ATTEMPTS) {
             await OTP.deleteOne({ _id: genratedOtp._id });
-            return res.status(429).json({ message: "Too many attempts. Request new OTP." });
+            return res.status(429).json({ success: false, message: "Too many attempts. Request new OTP." });
         }
         const incomingHash = crypto.createHash('sha256').update(otp).digest('hex');
         if (genratedOtp.otpHash !== incomingHash) {
-            record.attempts += 1;
-            await record.save();
-            return res.status(400).json({ message: "Invalid or expired OTP" });
+            genratedOtp.attempts += 1;
+            await genratedOtp.save();
+            return res.status(400).json({ success: false, message: "Invalid or expired OTP" });
         }
         await OTP.deleteOne({ _id: genratedOtp._id });
         if (type === "mail") {
@@ -100,8 +101,8 @@ export const verifyOtp = async (req, res) => {
         }
         return res.status(200).json({ success: true, message: "OTP verified" });
     } catch (error) {
-        console.error(error.message);
-        return res.status(500).json({ message: "Something went wrong" });
+        console.log(error)
+        return res.status(500).json({ message: "Something went wrong", error: error.message });
     }
 
 }
