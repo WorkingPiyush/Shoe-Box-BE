@@ -1,6 +1,9 @@
 import ProductList from "../data/ProductList2.json" with {type: "json"};
 import Cart from "../models/Cart.js";
 let products = ProductList;
+import dotenv from 'dotenv';
+dotenv.config()
+const BASE_URL = process.env.BASE_URL;
 
 export const Update = async (req, res) => {
     try {
@@ -45,10 +48,11 @@ export const CartInfo = async (req, res) => {
     try {
         const Product = Usercart.map(item => {
             const productDetails = products.find(p => p.id === item.productId)
+            let images = productDetails.images.map((img) => `${BASE_URL}/${img}`)
             return {
                 productId: item.productId,
-                image: productDetails.image,
-                details: productDetails.name,
+                image: images,
+                details: productDetails.description,
                 quantity: item.quantity,
                 size: item.shoeSize,
                 price: productDetails.price,

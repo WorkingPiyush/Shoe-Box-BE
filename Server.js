@@ -13,7 +13,48 @@ dotenv.config()
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
+// for developent
+app.use(
+    helmet({
+        crossOriginResourcePolicy: false
+    })
+);
+// for production
+// app.use(
+//     helmet({
+//         crossOriginResourcePolicy: { policy: "cross-origin" } // allow CDN/frontend to use images
+//     })
+// );
+
+// app.use(
+//     helmet.contentSecurityPolicy({
+//         directives: {
+//             defaultSrc: ["'self'"],
+
+//             imgSrc: [
+//                 "'self'",
+//                 "data:",
+//                 "https://cdn.yoursite.com"   // your image CDN
+//             ],
+
+//              connectSrc: [
+//           "'self'",
+//     "https://api.yoursite.com",
+//     "https://www.yoursite.com"
+//               ],
+
+//             scriptSrc: ["'self'"],        // no unsafe-inline/eval
+//             styleSrc: ["'self'"],         // add CDN if using Tailwind CDN etc.
+// fontSrc: [
+//     "'self'",
+//     "https://fonts.gstatic.com"
+// ],
+//             objectSrc: ["'none'"],        // block plugins
+//             upgradeInsecureRequests: []   // force https
+//         }
+//     })
+// );
+
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }))
 app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
 app.use(passport.initialize());
@@ -22,10 +63,12 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 // Home Route
 connectDB(process.env.MONGODB_URI)
+app.use('/static', express.static('public'));
 
 app.get('/', (req, res) => {
     res.send("Hello from backend !!")
 })
+app.use('/static', express.static('public'));
 // Auth Routes
 import authRoutes from './src/routes/auth.Routes.js'
 app.use('/users/', authRoutes)

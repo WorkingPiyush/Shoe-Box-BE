@@ -1,6 +1,9 @@
 import ProductList from "../data/ProductList2.json" with {type: "json"};
 let products = ProductList;
 import WishList from "../models/WishList.js";
+import dotenv from 'dotenv';
+dotenv.config()
+const BASE_URL = process.env.BASE_URL;
 
 export const wishlistToggle = async (req, res) => {
     try {
@@ -46,9 +49,10 @@ export const wishlistInfo = async (req, res) => {
     try {
         const product = wishList.map(item => {
             const productDetails = products.find(p => p.id === item.productId)
+            let images = productDetails.images.map((img) => `${BASE_URL}/${img}`)
             return {
                 productId: item.productId,
-                image: productDetails.image,
+                image: images,
                 name: productDetails.name,
                 price: productDetails.price,
                 availablity: "Available",
