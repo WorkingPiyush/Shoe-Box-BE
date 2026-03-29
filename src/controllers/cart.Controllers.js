@@ -43,20 +43,22 @@ export const Update = async (req, res) => {
     }
 }
 
-export const CartInfo = async (req, res) => {
-    const { Usercart } = req.body;
+export const cartPreview = async (req, res) => {
+    const { items } = req.body;
     try {
-        const Product = Usercart.map(item => {
-            const productDetails = products.find(p => p.id === item.productId)
-            let images = productDetails.images.map((img) => `${BASE_URL}/${img}`)
+        const Product = items.map(item => {
+            const product = products.find(p => p.id === item.productId)
+            let images = product.images.map((img) => `${BASE_URL}/${img}`)
             return {
                 productId: item.productId,
+                thumbnail: `${BASE_URL}/${product.thumbnail}`,
                 image: images,
-                details: productDetails.description,
+                details: product.description,
                 quantity: item.quantity,
-                size: item.shoeSize,
-                price: productDetails.price,
-                total: item.quantity * productDetails.price
+                shoeSize: item.shoeSize,
+                price: product.price,
+                name: product?.name,
+                total: item.quantity * product.price
             }
         });
         return res.status(200).json(Product)
@@ -66,16 +68,29 @@ export const CartInfo = async (req, res) => {
     }
 }
 
-export const CartDetails = async (req, res) => {
+export const Usercart = async (req, res) => {
     const userId = req.user.id;
     try {
         let cart = await Cart.findOne({ userId });
-        if (!cart) {
-            return res.status(200).json([])
-        } else {
-            return res.status(200).json(cart.items)
-        }
-
+        if (!cart) return res.status(200).json([])
+        const Usercart = cart.items.map(item => {
+            const product = products.find(prod => prod.id == item.productId);
+            return {
+                productId: item.productId,
+                thumbnail: `${BASE_URL}/${product.thumbnail}`,
+                image: product.images,
+                details: product.description,
+                quantity: item.quantity,
+                shoeSize: item.shoeSize,
+                price: product.price,
+                total: item.quantity * product.price,
+                name: product?.name,
+                price: product?.price,
+                name: product?.name,
+                total: item.quantity * product.price
+            };
+        })
+        res.status(200).json(Usercart);
     } catch (error) {
         res.status(500).json({ message: "Server error" });
         console.log(error)
