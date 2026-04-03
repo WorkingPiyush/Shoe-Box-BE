@@ -60,8 +60,10 @@ export const createOrder = async (req, res) => {
                 receipt: `receipt_${Date.now()}`,
             });
         }
+        let orderId = "Order_" + Math.floor(Math.random() * 10000)
         const orderObj = {
             userId: userId,
+            orderId,
             items,
             totalAmount: total,
             address,

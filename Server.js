@@ -87,6 +87,9 @@ app.use('/cart/', cartRoutes);
 // OAuth Routes
 import oAuthRoutes from './src/routes/OAuth.Routes.js';
 app.use('/auth/', oAuthRoutes)
+
+import orderRoutes from './src/routes/orders.Routes.js'
+app.use('/orders/', orderRoutes)
 // WishList Routes
 import wishListToggle from './src/routes/WishList.Routes.js'
 app.use('/wishlist/', wishListToggle)
