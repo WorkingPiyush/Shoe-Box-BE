@@ -94,6 +94,9 @@ app.use('/wishlist/', wishListToggle)
 import otpRoutes from './src/routes/otp.Routes.js'
 app.use('/auth/otp/', otpRoutes)
 
+import onlinePayments from './src/routes/payment.Routes.js'
+app.use('/pay', onlinePayments)
+
 app.listen(PORT, () => {
     console.log(`App is running at ${PORT}`)
 })

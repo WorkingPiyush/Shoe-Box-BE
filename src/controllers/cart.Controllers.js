@@ -12,9 +12,6 @@ export const Update = async (req, res) => {
         if (!productId || !shoeSize) {
             return res.status(400).json({ success: false, message: "Provide necessary details" });
         }
-        if (quantity < 0) {
-            return res.status(400).json({ message: "Invalid Quantity" });
-        }
         const product = products.find(item => item.id === productId);
         if (!product) {
             return res.status(400).json({ message: "Product Not Found !!" });
@@ -24,13 +21,14 @@ export const Update = async (req, res) => {
             cart = await Cart.create({ userId, items: [] });
         }
         const existence = cart.items.find(i => i.productId === productId && i.shoeSize === shoeSize)
-        if (quantity <= 0) {
+        if (quantity === 0 || (existence?.quantity + quantity === 0)) {
             cart.items = cart.items.filter((i) => !(i.productId === productId && i.shoeSize === shoeSize));
             await cart.save();
             return res.status(200).json({ success: true, cart });
         }
         if (existence) {
-            existence.quantity = quantity;
+            const prvQty = existence.quantity
+            existence.quantity = prvQty + quantity;
         }
         else {
             cart.items.push({ productId, quantity, shoeSize });
@@ -87,7 +85,8 @@ export const Usercart = async (req, res) => {
                 name: product?.name,
                 price: product?.price,
                 name: product?.name,
-                total: item.quantity * product.price
+                total: item.quantity * product.price,
+                cartId: cart._id
             };
         })
         res.status(200).json(Usercart);

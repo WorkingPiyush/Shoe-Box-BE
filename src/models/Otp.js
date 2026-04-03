@@ -5,7 +5,7 @@ const otpSchema = mongoose.Schema({
     type: { type: String, enum: ["mail", "phone"], required: true },
     otpHash: { type: String, required: true },
     attempts: { type: Number, default: 0 },
-    createdAt: { type: Date, default: Date.now, index: true },
+    createdAt: { type: Date, default: Date.now},
 });
 // Auto-delete after 5 minutes
 otpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 });

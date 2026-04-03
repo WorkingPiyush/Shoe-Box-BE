@@ -5,6 +5,7 @@ const orderSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
+        index: true,
     },
     items: [
         {
@@ -12,48 +13,54 @@ const orderSchema = mongoose.Schema({
                 type: Number,
                 required: true
             },
-            quantity: {
-                type: Number,
-                default: 1
-            },
-            shoeSize: {
-                type: Number,
-                required: true,
-            },
-            price: {
-                type: Number,
-                required: true,
-            }
-
-        }
+            name: String,
+            price: Number,
+            quantity: Number,
+            shoeSize: Number,
+        },
     ],
 
     totalAmount: {
         type: Number,
         required: true,
     },
-    orderStatus: {
+    address: {
+        type: Object,
+        required: true,
+    },
+    paymentMethod: {
         type: String,
-        enum: ["Processing", "Shipped", "Delivered", "Cancelled"],
-        default: "Processing"
+        enum: ["online", "cod"],
+        required: true
+    },
+    razorpay_orderid: {
+        type: String,
+        index: true,
+        unique: true,
+        sparse: true,
+        default: undefined
+    },
+    razorpay_paymentid: {
+        type: String,
+        unique: true,
+        sparse: true
     },
     paymentStatus: {
         type: String,
-        enum: ["Pending", "Paid", "Failed"],
-        default: "Pending"
+        enum: ["created", "paid", "failed", "pending"],
+        default: "created",
+        index: true,
     },
-    shippingAddress: {
-        name: String,
-        phone: String,
-        street: String,
-        city: String,
-        state: String,
-        pincode: String,
-        country: String,
-    }
-
+    orderStatus: {
+        type: String,
+        enum: ["pending", "confirmed", "shipped", "delivered", "cancelled"],
+        default: "pending",
+    },
+    expiresAt: {
+        type: Date,
+    },
 },
     { timestamps: true }
 )
-
+orderSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 export default mongoose.model("order", orderSchema)
