@@ -3,7 +3,6 @@ import Order from '../models/Order.js';
 let products = ProductList;
 import dotenv from 'dotenv';
 dotenv.config()
-const BASE_URL = process.env.BASE_URL;
 
 export const order = async (req, res) => {
     const userId = req.user.id;
@@ -13,25 +12,22 @@ export const order = async (req, res) => {
             return res.status(404).json({ success: false, message: "No orders found" });
         }
         const response = orders.map(order => {
-            let Prodimage = order.items.map(i => {
-                return products.find(item => item.id === i.productId).thumbnail
-            })
             let product = order.items.map(i => {
                 let item = products.find(item => item.id === i.productId)
                 return {
                     name: item.name,
                     quantity: i.quantity,
                     price: item.price,
-                    image: `${BASE_URL}/${item.thumbnail}`
+                    thumbnail: item.thumbnail,
                 }
             })
             return {
-                thumbnail: `${BASE_URL}/${Prodimage[0]}`,
                 id: order.orderId,
                 items: (order.items || []).length,
                 totalAmount: order.totalAmount,
                 status: order.orderStatus,
                 products: product,
+                preview: product[0]?.thumbnail,
                 delivery: order.address,
                 payment: order.paymentMethod,
                 date: order.createdAt.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
