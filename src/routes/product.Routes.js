@@ -1,9 +1,8 @@
 import express from "express";
 const router = express.Router();
-import { productPage, homeSectionImgs, productArr } from "../controllers/product.Controllers.js";
+import { productPage, productArr } from "../controllers/product.Controllers.js";
 
-router.get('/section', productArr) // for product items gender-wise
-router.get('/home', homeSectionImgs) // for limited images...
+router.get('/products', productArr) // for product items gender-wise
 router.get('/page', productPage)
 
 
