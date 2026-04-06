@@ -4,12 +4,12 @@ const cartSchema = mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required:true,
+        required: true,
     },
     items: [
         {
             productId: {
-                type: Number,
+                type: String,
                 required: true
             },
             quantity: {
@@ -18,7 +18,7 @@ const cartSchema = mongoose.Schema({
             },
             shoeSize: {
                 type: Number,
-                required:true,
+                required: true,
             }
         }
     ]

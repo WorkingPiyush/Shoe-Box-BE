@@ -1,10 +1,9 @@
 import { razorpayInstance } from "../config/rozarpay.js";
-import ProductList from "../data/ProductList2.json" with {type: "json"};
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import Cart from "../models/Cart.js";
+import Product from '../models/Product.js';
 import Order from '../models/Order.js';
-let products = ProductList;
 dotenv.config();
 
 export const createOrder = async (req, res) => {
@@ -36,7 +35,8 @@ export const createOrder = async (req, res) => {
         const items = [];
 
         for (let item of cart.items) {
-            const product = products.find((i) => i.id === item.productId);
+            // const product = products.find((i) => i.id === item.productId);
+            const product = await Product.findById(item.productId)
             if (!product) continue;
             const price = product.price;
             items.push({

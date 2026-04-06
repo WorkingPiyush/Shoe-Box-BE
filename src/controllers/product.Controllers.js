@@ -15,7 +15,7 @@ export const productPage = async (req, res) => {
         console.log(error)
     }
 }
-
+const productCount = new Map();
 export const productArr = async (req, res) => {
     try {
         const { gender, page = 1, limit = 20 } = req.query;
@@ -28,15 +28,21 @@ export const productArr = async (req, res) => {
             return res.status(400).json({ sucess: false, message: "Invalid Type of Page No" });
         }
         // allowed genders
-        const allowedGenders = ['male', 'female', 'unisex'];
+        const allowedGenders = ['male', 'female', 'kids', 'unisex'];
         const filter = {};
         if (gender && allowedGenders.includes(gender)) filter.gender = gender;
         const pageNum = Math.max(1, parseInt(page)); // starting point
         const size = Math.min(50, parseInt(limit)); // next document or next limit document to be returned
-        const total = await Product.countDocuments(filter) // total documents gender wise
-
+        let total = productCount.get("count");
+        if (total === undefined) {
+            total = await Product.countDocuments(filter); // total documents gender wise
+            productCount.set("count", total);
+        }
         const start = (pageNum - 1) * size; // skiping point or starting point
+        // console.time("fetchProducts");
+
         const finalProducts = await Product.find(filter).skip(start).limit(size) // paginated result
+        // console.timeEnd("fetchProducts");
         return res.status(200).json({
             product: finalProducts,
             totalPages: Math.ceil(total / size), // total response pages as Product.countDocuments({ gender }) 
