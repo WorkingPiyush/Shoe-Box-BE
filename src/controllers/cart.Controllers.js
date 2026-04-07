@@ -19,31 +19,26 @@ export const Update = async (req, res) => {
             cart = await Cart.create({ userId, items: [] });
         }
         const existence = cart.items.find(i => i.productId === productId && i.shoeSize === shoeSize)
-        console.log(existence)
         if (quantity === 0 || (existence?.quantity + quantity === 0)) {
             cart.items = cart.items.filter((i) => !(i.productId === productId && i.shoeSize === shoeSize));
             await cart.save();
             return res.status(200).json({ success: true, cart });
-        }
-
-        if (existence) {
+        } if (existence) {
             const prvQty = existence.quantity
             existence.quantity = prvQty + quantity;
-        }
-        else {
+        } else {
             cart.items.push({ productId, quantity, shoeSize });
         }
         await cart.save();
         return res.status(200).json({ success: true, cart });
     } catch (error) {
         console.log(error.message)
-        return res.status(500).json({ message: "Server error" });
+        return res.status(500).json({ message: "Server error", error: error.message });
     }
 }
 
 export const cartPreview = async (req, res) => {
     const items = req.body;
-    console.log(items)
     try {
         const product = await Promise.all(
             items.map(async (item) => {

@@ -4,8 +4,14 @@ dotenv.config()
 
 export const productPage = async (req, res) => {
     try {
-        const { gender, slug } = req.query;
-        const product = await Product.findOne({ slug: slug, gender: gender })
+        const gender = req.query.gender;
+        const slug = req.query.slug;
+
+        if (!gender || !slug) {
+            return res.status(400).json({ success: false, message: "Necessary details not provided" });
+        }
+        // console.log(gender, slug)
+        const product = await Product.findOne({ slug: slug, gender: gender });
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found !!" });
         }
