@@ -1,14 +1,13 @@
-import ProductList from "../data/ProductList2.json" with {type: "json"};
-let products = ProductList;
+import Product from '../models/Product.js';
 import WishList from "../models/WishList.js";
 import dotenv from 'dotenv';
 dotenv.config()
 
 export const wishlistToggle = async (req, res) => {
+    const userId = req.user.id;
+    const { productId } = req.body;
     try {
-        const userId = req.user.id;
-        const { productId } = req.body;
-        const product = products.find(item => item.id === productId);
+        const product = await Product.findById(productId);
         if (!product) return res.status(400).json({ message: "Product Not Found !!" });
         let wishList = await WishList.findOne({ userId });
         if (!wishList) {
@@ -46,17 +45,19 @@ export const wishlist = async (req, res) => {
 export const wishlistInfo = async (req, res) => {
     const wishList = req.body;
     try {
-        const product = wishList.map(item => {
-            const productDetails = products.find(p => p.id === item.productId)
-            return {
-                productId: item.productId,
-                image: productDetails.images,
-                name: productDetails.name,
-                price: productDetails.price,
-                availablity: "Available",
-                gender: productDetails.gender
-            }
-        });
+        const product = await Promise.all(
+            wishList.map(async (item) => {
+                const productDetails = await Product.findById(item.productId)
+                return {
+                    productId: item.productId,
+                    image: productDetails.images,
+                    name: productDetails.name,
+                    price: productDetails.price,
+                    availablity: "Available",
+                    gender: productDetails.gender
+                }
+            })
+        )
         return res.status(200).json(product)
     } catch (error) {
         res.status(500).json({ message: "Server error" });

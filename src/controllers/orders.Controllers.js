@@ -1,6 +1,4 @@
-import ProductList from "../data/ProductList2.json" with {type: "json"};
 import Order from '../models/Order.js';
-let products = ProductList;
 import dotenv from 'dotenv';
 dotenv.config()
 
@@ -11,29 +9,31 @@ export const order = async (req, res) => {
         if (!orders || orders.length === 0) {
             return res.status(404).json({ success: false, message: "No orders found" });
         }
-        const response = orders.map(order => {
-            let product = order.items.map(i => {
-                let item = products.find(item => item.id === i.productId)
-                return {
-                    name: item.name,
-                    quantity: i.quantity,
-                    price: item.price,
-                    thumbnail: item.thumbnail,
-                }
-            })
+        const result = orders.map(order => {
+            const prodDetails = (order.items || []).map(i => ({
+                name: i.name,
+                quantity: i.quantity,
+                price: i.price,
+                thumbnail: i.thumbnail,
+            }))
+
             return {
                 id: order.orderId,
-                items: (order.items || []).length,
+                items: prodDetails.length,
                 totalAmount: order.totalAmount,
                 status: order.orderStatus,
-                products: product,
-                preview: product[0]?.thumbnail,
+                products: prodDetails,
+                preview: prodDetails[0]?.thumbnail,
                 delivery: order.address,
                 payment: order.paymentMethod,
-                date: order.createdAt.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
+                date: order.createdAt.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: '2-digit',
+                    year: 'numeric',
+                }),
             }
         })
-        return res.status(200).json(response);
+        return res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: "Server error" });
         console.log(error)

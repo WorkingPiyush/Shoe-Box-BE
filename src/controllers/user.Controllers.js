@@ -6,9 +6,10 @@ dotenv.config()
 
 
 export const UserInfo = async (req, res) => {
+    const userId = req.user.id
     try {
-        const user = await User.findById(req.user.id).select("-password");
-        if (!user) return res.status
+        const user = await User.findById(userId).select("-password");
+        if (!user) return;
         return res.status(200).json(user);
     } catch (error) {
         return res.status(500).json({ message: "user Not Found" });

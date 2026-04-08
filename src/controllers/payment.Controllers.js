@@ -40,10 +40,12 @@ export const createOrder = async (req, res) => {
             if (!product) continue;
             const price = product.price;
             items.push({
-                productId: product.id,
+                productId: product._id,
                 name: product.name,
                 price,
-                quantity: item.quantity
+                shoeSize: item.shoeSize,
+                quantity: item.quantity,
+                thumbnail: product.thumbnail
             })
             total += price * item.quantity;
         }
@@ -60,7 +62,7 @@ export const createOrder = async (req, res) => {
                 receipt: `receipt_${Date.now()}`,
             });
         }
-        let orderId = "Order_" + Math.floor(Math.random() * 10000)
+        let orderId = "Order :" + Math.floor(Math.random() * 10000)
         const orderObj = {
             userId: userId,
             orderId,
