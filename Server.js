@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+dotenv.config()
 import express from "express";
 import session from "express-session";
 import helmet from 'helmet';
@@ -8,18 +9,17 @@ import passport from 'passport';
 import { connectDB } from './src/config/connectDB.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
-dotenv.config()
 
+if (process.env.NODE_ENV === "production") {
+    app.set('trust proxy', 1);
+}
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-// for developent
-app.use(
-    helmet({
-        crossOriginResourcePolicy: false
-    })
-);
-// for production
+app.use(cookieParser());
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+
+app.use(helmet());
+// for last
 // app.use(
 //     helmet({
 //         crossOriginResourcePolicy: { policy: "cross-origin" } // allow CDN/frontend to use images
@@ -55,20 +55,23 @@ app.use(
 //     })
 // );
 
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: true }))
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === "production", httpOnly: true, sameSite: "none" }
+}))
 app.use(passport.initialize());
 app.use(passport.session());
+
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 // Home Route
 connectDB(process.env.MONGODB_URI)
-app.use('/static', express.static('public'));
 
 app.get('/', (req, res) => {
     res.send("Hello from backend !!")
 })
-app.use('/static', express.static('public'));
 // Auth Routes
 import authRoutes from './src/routes/auth.Routes.js'
 app.use('/users/', authRoutes)

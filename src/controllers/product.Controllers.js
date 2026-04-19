@@ -1,6 +1,8 @@
-import Product from '../models/Product.js';
 import dotenv from 'dotenv';
 dotenv.config()
+
+import Product from '../models/Product.js';
+
 
 export const productPage = async (req, res) => {
     try {

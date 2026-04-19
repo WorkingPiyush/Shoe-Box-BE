@@ -1,10 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { razorpayInstance } from "../config/rozarpay.js";
 import crypto from 'crypto';
-import dotenv from 'dotenv';
 import Cart from "../models/Cart.js";
 import Product from '../models/Product.js';
 import Order from '../models/Order.js';
-dotenv.config();
+
 
 export const createOrder = async (req, res) => {
     const userId = req.user.id

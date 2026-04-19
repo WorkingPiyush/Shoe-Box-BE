@@ -1,6 +1,7 @@
-import Order from '../models/Order.js';
 import dotenv from 'dotenv';
 dotenv.config()
+import Order from '../models/Order.js';
+
 
 export const order = async (req, res) => {
     const userId = req.user.id;

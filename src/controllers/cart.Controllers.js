@@ -1,7 +1,9 @@
-import Cart from "../models/Cart.js";
-import Product from '../models/Product.js';
 import dotenv from 'dotenv';
 dotenv.config()
+
+import Cart from "../models/Cart.js";
+import Product from '../models/Product.js';
+
 
 export const Update = async (req, res) => {
     try {

@@ -1,7 +1,9 @@
-import Product from '../models/Product.js';
-import WishList from "../models/WishList.js";
 import dotenv from 'dotenv';
 dotenv.config()
+
+import Product from '../models/Product.js';
+import WishList from "../models/WishList.js";
+
 
 export const wishlistToggle = async (req, res) => {
     const userId = req.user.id;

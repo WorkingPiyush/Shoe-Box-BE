@@ -1,9 +1,11 @@
+import passport from "passport";
+dotenv.config()
+
 import user from "../models/User.js";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import '../config/passport.auth.js';
-import passport from "passport";
-dotenv.config()
+
 
 export const GoogleOAuth = passport.authenticate("google", { scope: ["profile", "email"] });
 export const GithubOAuth = passport.authenticate("github", { scope: ["profile", "email"] });

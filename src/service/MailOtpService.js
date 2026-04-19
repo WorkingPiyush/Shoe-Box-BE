@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
+dotenv.config();
 import nodemailer from "nodemailer";
 import { BrevoClient } from "@getbrevo/brevo";
-dotenv.config();
+
 
 let transporter;
 if (process.env.NODE_ENV !== "production") {
@@ -21,7 +22,6 @@ export const SendEmail = async (to, subject, html, name = "user") => {
         const client = new BrevoClient({
             apiKey: process.env.BREVO_API_KEY,
         });
-        console.log(client)
         const message = {
             sender: { email: process.env.EMAIL_FROM },
             to: [{ email: to, name }],

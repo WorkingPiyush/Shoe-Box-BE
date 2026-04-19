@@ -1,17 +1,19 @@
-import user from "../models/User.js";
 import dotenv from 'dotenv';
+dotenv.config()
+
+import user from "../models/User.js";
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 
-dotenv.config()
+
 
 export const signup = async (req, res) => {
     try {
         const fullName = req.body.fullName?.trim();
         const email = req.body.email?.trim().toLowerCase();
         const password = req.body.password?.trim();
-        
+
         if (!fullName || !email || !password) {
             return res.status(400).json({ status: false, message: "Please enter all details" });
         }

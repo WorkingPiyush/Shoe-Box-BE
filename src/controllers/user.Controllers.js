@@ -1,8 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config()
+
 import User from "../models/User.js";
 import Address from "../models/Address.js";
-import dotenv from 'dotenv';
 import axios from "axios";
-dotenv.config()
+
 
 
 export const UserInfo = async (req, res) => {
