@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: process.env.LOCAL_FRONTEND_URL, credentials: true }));
 
 app.use(helmet());
 // for last
@@ -59,7 +59,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: process.env.NODE_ENV === "production", httpOnly: true, sameSite: "none" }
+    cookie: { secure: process.env.NODE_ENV === "production", httpOnly: true, sameSite: process.env.NODE_ENV === "production" ? "none" : "lax" }
 }))
 app.use(passport.initialize());
 app.use(passport.session());
