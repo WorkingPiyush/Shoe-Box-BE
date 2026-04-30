@@ -158,8 +158,8 @@ export const profileUpdate = async (req, res) => {
     try {
         const userId = req.user.id;
         const { email, phone } = req.body;
-
-        if (!email.includes('@')) {
+        
+        if (email && !email.includes('@')) {
             return res.status(400).json({ success: false, message: "Invalid Email" });
         }
         let user = await User.findById(userId);
@@ -184,7 +184,7 @@ export const profileUpdate = async (req, res) => {
             if (await User.findOne({ phone })) {
                 return res.status(400).json({ success: false, message: "Invalid Phone" });
             }
-            user.phone = `+91${phone}`;
+            user.phone = phone;
         }
         user.lastProfileUpdate = now;
         await user.save();
