@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config()
-
 import User from "../models/User.js";
 import Address from "../models/Address.js";
 import axios from "axios";

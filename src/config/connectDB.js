@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import dotenv from 'dotenv';
-dotenv.config()
+
 export const connectDB = async (url) => {
     await mongoose.connect(url).then((res) => {
         console.log("Database Connected !!")

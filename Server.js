@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: process.env.PROD_FRONTEND_URL, credentials: true }));
+app.use(cors({ origin: [process.env.PROD_FRONTEND_URL, process.env.LOCAL_FRONTEND_URL], credentials: true }));
 
 app.use(helmet());
 // for last
@@ -68,6 +68,11 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 // Home Route
 connectDB(process.env.MONGODB_URI)
+
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
 
 app.get('/', (req, res) => {
     res.send("Hello from backend !!")

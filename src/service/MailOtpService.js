@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import nodemailer from "nodemailer";
 import { BrevoClient } from "@getbrevo/brevo";
 
@@ -14,7 +12,6 @@ if (process.env.NODE_ENV !== "production") {
         },
     });
 }
-
 
 export const SendEmail = async (to, subject, html, name = "user") => {
     // for production

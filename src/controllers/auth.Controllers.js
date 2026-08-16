@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config()
-
 import user from "../models/User.js";
 import validator from 'validator';
 import bcrypt from 'bcrypt';

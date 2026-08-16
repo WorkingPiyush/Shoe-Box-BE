@@ -1,11 +1,9 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import { razorpayInstance } from "../config/rozarpay.js";
 import crypto from 'crypto';
 import Cart from "../models/Cart.js";
 import Product from '../models/Product.js';
 import Order from '../models/Order.js';
+import { redis } from "../config/redis.js";
 
 
 export const createOrder = async (req, res) => {
@@ -121,6 +119,7 @@ export const verifyPayment = async (req, res) => {
         )
         if (updateOrder) {
             await Cart.deleteOne({ userId: updateOrder.userId })
+            redis.del(`${userId}:cart`)
             return res.status(200).json({ success: true, message: "Payment verified and order created" });
         }
         // checking the order existence

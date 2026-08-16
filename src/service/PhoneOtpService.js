@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import twilio from "twilio";
 
 
@@ -16,5 +13,6 @@ export const sendPhoneOtp = async (body, to) => {
         console.log("Phone Otp Sent: ", res.sid);
     } catch (error) {
         console.error(error)
+        throw new Error(error.message);
     }
 }

@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import express from "express";
 const router = express.Router();
 import { GoogleOAuth, GoogleOAuthCb, GithubOAuth, GithubOAuthCb } from "../controllers/OAuth.Controllers.js";

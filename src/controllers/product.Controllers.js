@@ -1,6 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config()
-
+import { redis } from '../config/redis.js';
 import Product from '../models/Product.js';
 
 
@@ -8,6 +6,12 @@ export const productPage = async (req, res) => {
     try {
         const gender = req.query.gender;
         const slug = req.query.slug;
+        const query = `product:${slug}`
+        const cached = await redis.get(query);
+        if (cached) {
+            let result = JSON.parse(cached);
+            return res.status(200).json(result);
+        }
 
         if (!gender || !slug) {
             return res.status(400).json({ success: false, message: "Necessary details not provided" });
@@ -17,6 +21,7 @@ export const productPage = async (req, res) => {
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found !!" });
         }
+        await redis.set(query, JSON.stringify(product), "EX", 120);
         return res.status(200).json(product);
     } catch (error) {
         res.status(500).json({ message: "Server error" });

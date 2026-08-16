@@ -1,6 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config()
-
+import { redis } from "../config/redis.js";
 import Cart from "../models/Cart.js";
 import Product from '../models/Product.js';
 
@@ -32,6 +30,7 @@ export const Update = async (req, res) => {
             cart.items.push({ productId, quantity, shoeSize });
         }
         await cart.save();
+        redis.del(`${userId}:cart`);
         return res.status(200).json({ success: true, cart });
     } catch (error) {
         console.log(error.message)
@@ -67,6 +66,12 @@ export const cartPreview = async (req, res) => {
 
 export const Usercart = async (req, res) => {
     const userId = req.user.id;
+    const query = `${userId}:cart`
+    const cached = await redis.get(query);
+    if (cached) {
+        let result = JSON.parse(cached);
+        return res.status(200).json(result);
+    };
     try {
         let cart = await Cart.findOne({ userId });
         if (!cart) return res.status(200).json([])
@@ -91,6 +96,7 @@ export const Usercart = async (req, res) => {
                 }
             })
         )
+        await redis.set(query, JSON.stringify(Usercart), "EX", 1200)
         res.status(200).json(Usercart);
     } catch (error) {
         res.status(500).json({ message: "Server error" });
