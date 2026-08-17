@@ -7,7 +7,7 @@ import { redis } from "../config/redis.js";
 
 export const UserInfo = async (req, res) => {
     const userId = req.user.id
-    const cached = redis.get(`user:${userId}`);
+    const cached = await redis.get(`user:${userId}`);
     if (cached) {
         return JSON.parse(cached);
     }
