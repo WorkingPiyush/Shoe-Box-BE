@@ -28,42 +28,69 @@ export const productPage = async (req, res) => {
         console.log(error)
     }
 }
-const productCount = new Map();
+
 export const productArr = async (req, res) => {
     try {
         const { gender, page = 1, limit = 20 } = req.query;
-        // Limit can't be more then 30 or Limit can't be less then 30 and Limit is Not a Number
-        if (parseInt(limit) > 30 || parseInt(limit) <= 0 || isNaN(parseInt(limit))) {
-            return res.status(400).json({ sucess: false, message: "Invalid Type of Limit" });
+
+        const pageNum = parseInt(page); // starting point
+        const size = parseInt(limit); // next document or next limit document to be returned
+
+
+        // Page can't be more then 30 or Page can't be less then 0 
+        if (isNaN(pageNum) || pageNum > 30 || pageNum <= 0) {
+            return res.status(400).json({ sucess: false, message: "Invalid Page No" });
         }
-        // Page can't be more then 30 or Page can't be less then 30 and Page is Not a Number
-        if (parseInt(page) > 30 || parseInt(page) <= 0 || isNaN(parseInt(page))) {
-            return res.status(400).json({ sucess: false, message: "Invalid Type of Page No" });
+        // Limit can't be more then 30 or Limit can't be less then 0 
+        if (isNaN(parseInt(size)) || size > 30 || size <= 0) {
+            return res.status(400).json({ sucess: false, message: "Invalid Limit" });
         }
+
         // allowed genders
         const allowedGenders = ['male', 'female', 'kids', 'unisex'];
-        const filter = {};
-        if (gender && allowedGenders.includes(gender)) filter.gender = gender;
-        const pageNum = Math.max(1, parseInt(page)); // starting point
-        const size = Math.min(50, parseInt(limit)); // next document or next limit document to be returned
-        let total = productCount.get("count");
-        if (total === undefined) {
-            total = await Product.countDocuments(filter); // total documents gender wise
-            productCount.set("count", total);
+        if (gender && !allowedGenders.includes(gender)) {
+            return res.status(400).json({ success: false, message: "Invalid Gender" });
+            console.error("Invalid Gender");
         }
-        const start = (pageNum - 1) * size; // skiping point or starting point
-        // console.time("fetchProducts");
 
-        const finalProducts = await Product.find(filter).skip(start).limit(size) // paginated result
-        // console.timeEnd("fetchProducts");
+        const filter = {};
+        if (gender) {
+            filter.gender = gender;
+        };
+
+        const genderQuery = gender || "all";
+        const productQuery = `products:${genderQuery}:page:${pageNum}:limit:${size}`;
+        const countQuery = `products:${genderQuery}`;
+
+        const cachedProducts = await redis.get(productQuery);
+        const cachedCount = await redis.get(countQuery);
+
+        let finalProducts;
+        let total;
+
+        if (cachedProducts) {
+            finalProducts = JSON.parse(cachedProducts);
+        } else {
+            const start = (pageNum - 1) * size; // skiping point or starting point
+            finalProducts = await Product.find(filter).skip(start).limit(size).lean(); // paginated result
+            await redis.set(productQuery, JSON.stringify(finalProducts), "EX", 300);
+        }
+
+        if (cachedCount) {
+            total = parseInt(cachedCount);
+        } else {
+            total = await Product.countDocuments(filter);
+            await redis.set(countQuery, total.toString(), "EX", 300);
+        }
+
         return res.status(200).json({
             product: finalProducts,
             totalPages: Math.ceil(total / size), // total response pages as Product.countDocuments({ gender }) 
             currentPage: pageNum
         });
     } catch (error) {
-        res.status(500).json({ message: "Server error" });
-        console.log(error)
+        console.error(error);
+        return res.status(500).json({ message: "Server error" });
     }
 
 }

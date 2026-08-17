@@ -1,14 +1,20 @@
 import User from "../models/User.js";
 import Address from "../models/Address.js";
 import axios from "axios";
+import { redis } from "../config/redis.js";
 
 
 
 export const UserInfo = async (req, res) => {
     const userId = req.user.id
+    const cached = redis.get(`user:${userId}`);
+    if (cached) {
+        return JSON.parse(cached);
+    }
     try {
         const user = await User.findById(userId).select("-password");
         if (!user) return;
+        await redis.set(`user:${userId}`, JSON.stringify(user), "EX", 9000);
         return res.status(200).json(user);
     } catch (error) {
         return res.status(500).json({ message: "user Not Found" });
@@ -155,7 +161,7 @@ export const profileUpdate = async (req, res) => {
     try {
         const userId = req.user.id;
         const { email, phone } = req.body;
-        
+
         if (email && !email.includes('@')) {
             return res.status(400).json({ success: false, message: "Invalid Email" });
         }

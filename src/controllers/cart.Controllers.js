@@ -70,6 +70,7 @@ export const Usercart = async (req, res) => {
     const cached = await redis.get(query);
     if (cached) {
         let result = JSON.parse(cached);
+        // console.log("Cachedresult", result)
         return res.status(200).json(result);
     };
     try {
