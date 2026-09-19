@@ -14,7 +14,7 @@ export const UserInfo = async (req, res) => {
     }
     try {
         const user = await User.findById(userId).select("-password");
-        console.log("user", user)
+        // console.log("user", user)
         if (!user) return;
         await redis.set(`user:${userId}`, JSON.stringify(user), "EX", 9000);
         return res.status(200).json(user);

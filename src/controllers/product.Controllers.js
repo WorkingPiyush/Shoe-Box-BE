@@ -49,8 +49,8 @@ export const productArr = async (req, res) => {
         // allowed genders
         const allowedGenders = ['male', 'female', 'kids', 'unisex'];
         if (gender && !allowedGenders.includes(gender)) {
-            return res.status(400).json({ success: false, message: "Invalid Gender" });
             console.error("Invalid Gender");
+            return res.status(400).json({ success: false, message: "Invalid Gender" });
         }
 
         const filter = {};
@@ -91,6 +91,37 @@ export const productArr = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Server error" });
+    }
+
+}
+
+export const productSearch = async (req, res) => {
+    try {
+        const { query } = req.query;
+        const { gender } = req.query;
+
+        if (!query.trim()) {
+            return res.status(400).json({ message: "Search query is required" });
+        }
+        const search = query.trim();
+
+        const products = await Product.find({
+            $and: [
+                { gender: gender },
+                {
+                    $or: [
+                        { name: { $regex: search, $options: "i" } },
+                        { brand: { $regex: search, $options: "i" } },
+                        { gender: { $regex: search, $options: "i" } },
+                        { category: { $regex: search, $options: "i" } },
+                        { description: { $regex: search, $options: "i" } },
+                        { slug: { $regex: search, $options: "i" } },
+                    ]
+                }
+            ]}).limit(10).sort({ createdAt: -1 });
+        return res.status(200).json({ products });
+    } catch (error) {
+        return res.status(500).json({ message: error.message || "Error in DB" });
     }
 
 }
