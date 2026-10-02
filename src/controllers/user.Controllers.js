@@ -201,3 +201,11 @@ export const profileUpdate = async (req, res) => {
         });
     }
 }
+
+export const usersList = async (req, res) => {
+    const users = await User.find({}, { "_id": 1, "fullName": 1, "email": 1, "role": 1, "isEmailVerified": 1, "emailVerifiedAt": 1, "isPhoneVerified": 1, "addresses": 1, "lastProfileUpdate": 1, "phone": 1, "cart": 1 });
+    if (users.length === 0) {
+        return res.status(404).json({ "message": "No users found !! " })
+    }
+    return res.status(200).json({ users })
+}

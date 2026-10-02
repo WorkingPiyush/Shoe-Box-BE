@@ -78,18 +78,18 @@ export const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, findUser.password);
     if (!isMatch) {
         return res.status(401).json({ success: false, message: "Invalid Password." });
-    }
+    };
+
     const payload = { id: findUser._id, name: findUser.fullName, role: findUser.role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
+
     return res.cookie("token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000
-    })
-
-        .status(200)
-        .json({ success: true, message: "Login Successfully", })
+    }).status(200)
+        .json({ success: true, message: "Login Successfully", isAdmin: findUser.role === "ADMIN" })
 }
 
 export const logout = (req, res) => {

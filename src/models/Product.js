@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
     id: { type: Number },
-    brand: { type: String, lowercase: true, trim: true },
+    brand: { type: String, lowercase: true, trim: true, required: true },
     name: { type: String, required: true },
     price: { type: Number, required: true, min: 0 },
     sizes: [Number],
     rating: { type: Number, default: 0, min: 0, max: 5 },
-    gender: { type: String, enum: ["male", "female", "kids"] },
+    gender: { type: String, enum: ["male", "female", "kids"], required: true },
     category: { type: String, index: true },
     description: String,
     isNew: { type: Boolean, default: false },

@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import { multerErrorHandler } from './src/middleware/multer.middleware.js';
 import { connectDB } from './src/config/connectDB.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -67,7 +68,7 @@ app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 // Home Route
-connectDB(process.env.MONGODB_URI)
+await connectDB(process.env.MONGODB_URI)
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
@@ -98,6 +99,10 @@ app.use('/auth/', oAuthRoutes)
 
 import orderRoutes from './src/routes/orders.Routes.js'
 app.use('/orders/', orderRoutes)
+
+import adminRoutes from './src/routes/Admin.Routes.js'
+app.use("/admin", adminRoutes)
+
 // WishList Routes
 import wishListToggle from './src/routes/WishList.Routes.js'
 app.use('/wishlist/', wishListToggle)
@@ -107,6 +112,8 @@ app.use('/auth/otp/', otpRoutes)
 
 import onlinePayments from './src/routes/payment.Routes.js'
 app.use('/pay', onlinePayments)
+
+app.use(multerErrorHandler);
 
 app.listen(PORT, () => {
     console.log(`App is running at ${PORT}`)
