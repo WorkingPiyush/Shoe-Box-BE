@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ origin: [process.env.PROD_FRONTEND_URL, process.env.LOCAL_FRONTEND_URL], credentials: true }));
+app.use(cors({ origin: [process.env.PROD_FRONTEND_URL, process.env.LOCAL_FRONTEND_URL,process.env.ADMIN_URL], credentials: true }));
 
 app.use(helmet());
 // for last
@@ -81,6 +81,7 @@ app.get('/', (req, res) => {
 // Auth Routes
 import authRoutes from './src/routes/auth.Routes.js'
 app.use('/users/', authRoutes)
+app.use('/admin/', authRoutes)
 
 // userInfo
 import userRoutes from './src/routes/user.Routes.js'

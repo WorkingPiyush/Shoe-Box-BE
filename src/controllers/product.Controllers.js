@@ -165,8 +165,8 @@ export const addProduct = async (req, res) => {
         const data = {
             ...result.data,
             slug: slugFy(result.data.name),
-            thumbnail: imageUrls[0].url
         };
+
         const files = req.files;
         if (!files || files.length === 0) {
             return res.status(400).json({
@@ -176,6 +176,7 @@ export const addProduct = async (req, res) => {
 
         uploadResults = await Promise.all(files.map((file) => uploadImages(file.buffer)));
         data.images = uploadResults.map((result) => (result.secure_url))
+        data.thumbnail = data.images[0]
 
         const newProduct = await Product.create(data);
 
