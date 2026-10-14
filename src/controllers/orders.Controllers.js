@@ -1,4 +1,5 @@
 import { redis } from '../config/redis.js';
+import { getUser } from '../helper/getUser.js';
 import Order from '../models/Order.js';
 
 export const order = async (req, res) => {
@@ -63,6 +64,7 @@ export const ordersList = async (req, res) => {
             shoeSize: i.shoeSize
         }));
 
+
         return {
             id: order._id,
             orderId: order.orderId,
@@ -81,6 +83,7 @@ export const ordersList = async (req, res) => {
                 day: '2-digit',
                 year: 'numeric',
             }),
+            // user: user,
         }
     })
     return res.status(200).json(result);

@@ -206,20 +206,19 @@ export const updateProduct = async (req, res) => {
     let uploadedImages = [];
 
     try {
-        const { productId } = req.query;
-        if (!productId) {
+        const { gender, slug } = req.query;
+        if (!slug) {
             return res.status(400).json({
                 message: "Product Id is required",
             });
         };
 
-        const product = await Product.findById(productId);
+        const product = await Product.findOne({ slug, gender });
         if (!product) {
             return res.status(404).json({
                 message: "Product not found",
             });
         };
-
         let sizes;
         if (req.body?.sizes !== undefined) {
             try {
@@ -249,6 +248,8 @@ export const updateProduct = async (req, res) => {
             ...result.data,
         };
 
+        const kept = [].concat(req.body.existingImages || []).filter((u) => product.images.includes(u));
+
         if (req.files && req.files?.length > 0) {
             uploadedImages = await Promise.all(
                 req.files.map((file) =>
@@ -256,7 +257,8 @@ export const updateProduct = async (req, res) => {
                 )
             );
 
-            data.images = uploadedImages.map((result) => (result.secure_url));
+            const uploaded = uploadedImages.map((result) => (result.secure_url));
+            data.images = [...kept, ...uploaded].slice(0, 2);
             data.thumbnail = data.images[0]
         }
 
@@ -265,8 +267,9 @@ export const updateProduct = async (req, res) => {
         if (data.name) {
             data.slug = slugFy(data.name);
         }
-        const updatedProduct = await Product.findByIdAndUpdate(
-            productId,
+
+        const updatedProduct = await Product.findOneAndUpdate(
+            { slug },
             data,
             {
                 new: true,

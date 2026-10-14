@@ -8,13 +8,13 @@ import { usersList } from "../controllers/user.Controllers.js";
 
 
 router.get('/orders', isAdmin, ordersList);
-router.get('/order', isAdmin, ordersPreview);
-router.patch('/order', isAdmin, orderUpdate);
+router.get('/orders/:orderid', isAdmin, ordersPreview);
+router.patch('/:orderId', isAdmin, orderUpdate);
 
 router.post('/products', isAdmin, productList);
-router.post('/add', isAdmin, upload.array("images", 2), addProduct);
-router.patch('/update', isAdmin, upload.array("images", 2), updateProduct);
-router.delete('/delete', isAdmin, deleteProduct);
+router.post('/product/add', isAdmin, upload.array("images", 2), addProduct);
+router.patch('/product/update', isAdmin, upload.array("images", 2), updateProduct);
+router.delete('/product/delete', isAdmin, deleteProduct);
 
 
 router.get('/users', isAdmin, usersList);
