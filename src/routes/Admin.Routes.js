@@ -8,8 +8,8 @@ import { usersList } from "../controllers/user.Controllers.js";
 
 
 router.get('/orders', isAdmin, ordersList);
-router.get('/orders/:orderid', isAdmin, ordersPreview);
-router.patch('/:orderId', isAdmin, orderUpdate);
+router.get('/order', isAdmin, ordersPreview);
+router.patch('/order/update', isAdmin, orderUpdate);
 
 router.post('/products', isAdmin, productList);
 router.post('/product/add', isAdmin, upload.array("images", 2), addProduct);

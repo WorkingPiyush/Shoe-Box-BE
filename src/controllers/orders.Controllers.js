@@ -1,6 +1,7 @@
+import mongoose from 'mongoose';
 import { redis } from '../config/redis.js';
-import { getUser } from '../helper/getUser.js';
 import Order from '../models/Order.js';
+import User from '../models/User.js';
 
 export const order = async (req, res) => {
     const userId = req.user.id;
@@ -49,7 +50,7 @@ export const order = async (req, res) => {
     }
 }
 export const ordersList = async (req, res) => {
-    let orders = await Order.find({}).sort({ createdAt: -1 });
+    let orders = await Order.find().populate("userId", "fullName email").sort({ createdAt: -1 });
 
     if (!orders || orders.length === 0) {
         return res.status(404).json({ success: false, message: "No orders found" });
@@ -70,7 +71,7 @@ export const ordersList = async (req, res) => {
             orderId: order.orderId,
             items: prodDetails.length,
             totalAmount: order.totalAmount,
-            userId: order.userId,
+            user: order.userId,
             orderStatus: order.orderStatus,
             products: prodDetails,
             preview: prodDetails[0]?.thumbnail,
@@ -83,33 +84,27 @@ export const ordersList = async (req, res) => {
                 day: '2-digit',
                 year: 'numeric',
             }),
-            // user: user,
         }
     })
     return res.status(200).json(result);
 }
 export const ordersPreview = async (req, res) => {
-    const id = req.query.id;
-    let order = await Order.find({ _id: id });
+    try {
+        const id = req.query.id;
+        if (!mongoose.isValidObjectId(id)) {
+            return res.status(400).json({ success: false, message: "Invalid order id" });
+        }
+        const orderPreview = await Order.findById(id).populate("userId", "fullName email").lean();
 
-    if (!order || order.length === 0) {
-        return res.status(404).json({ success: false, message: "order id invalid or not found" });
+        if (!orderPreview) {
+            return res.status(404).json({ success: false, message: "Order not found" });
+        }
+
+        return res.status(200).json({ success: true, orderPreview });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: "Server error" });
     }
-
-    const result = order.map((ordr => ({
-        id: ordr._id,
-        userId: ordr.userId,
-        orderId: ordr.orderId,
-        items: ordr.items,
-        totalAmount: ordr.totalAmount,
-        deliveryAddress: ordr.address,
-        paymentMethod: ordr.paymentMethod,
-        paymentId: ordr.razorpay_paymentid,
-        paymentStatus: ordr.paymentStatus,
-        orderStatus: ordr.orderStatus,
-        orderDate: ordr.createdAt,
-    })))
-    return res.status(200).json(result);
 }
 export const orderUpdate = async (req, res) => {
     try {
