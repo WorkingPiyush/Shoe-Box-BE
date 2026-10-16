@@ -4,7 +4,7 @@ import { addProduct, updateProduct, deleteProduct, productList } from "../contro
 import upload from "../config/multer.js";
 import { ordersList, ordersPreview, orderUpdate } from "../controllers/orders.Controllers.js";
 import { isAdmin } from "../middleware/admin.middleware.js";
-import { usersList } from "../controllers/user.Controllers.js";
+import { users } from "../controllers/user.Controllers.js";
 
 
 router.get('/orders', isAdmin, ordersList);
@@ -17,7 +17,7 @@ router.patch('/product/update', isAdmin, upload.array("images", 2), updateProduc
 router.delete('/product/delete', isAdmin, deleteProduct);
 
 
-router.get('/users', isAdmin, usersList);
+router.get('/users', isAdmin, users);
 
 
 
